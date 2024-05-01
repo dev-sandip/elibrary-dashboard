@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import useTokenStore from "@/store";
 
 import {
   Bell,
@@ -30,9 +31,18 @@ import {
   ShoppingCart,
   Users,
 } from "lucide-react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { toast } from "sonner";
 
 const DashboardLayout = () => {
+  const { token, setToken } = useTokenStore((state) => state);
+  if (token === "") {
+    return <Navigate to={"/auth/login"} replace />;
+  }
+  const handleLogout = () => {
+    setToken("");
+    toast.success("Logged out successfully");
+  };
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
@@ -197,7 +207,9 @@ const DashboardLayout = () => {
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Button variant={"link"}>Logout</Button>
+                <Button onClick={handleLogout} variant={"link"}>
+                  Logout
+                </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
