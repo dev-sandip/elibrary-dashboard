@@ -14,6 +14,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { login } from "@/http/api";
+import { LoaderCircle } from "lucide-react";
+import { NetworkError } from "@/types";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -24,6 +26,9 @@ const LoginPage = () => {
     onSuccess: () => {
       toast.success("Logged in successfully!");
       navigate("/dashboard/home");
+    },
+    onError: (error: NetworkError) => {
+      toast.error(error.response?.data?.message || "Something Went Wrong!");
     },
   });
   const handleLogin = () => {
@@ -45,6 +50,7 @@ const LoginPage = () => {
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>
               Enter your email below to login to your account
+              {mutation.isPaused && <div>Loading</div>}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -76,9 +82,15 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              <Button onClick={handleLogin} type="submit" className="w-full">
-                Login
-              </Button>
+              <div className="flex items-center">
+                <Button onClick={handleLogin} type="submit" className="w-full">
+                  {mutation.isPending ? (
+                    <LoaderCircle className="animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
+                </Button>
+              </div>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
