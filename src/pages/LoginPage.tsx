@@ -13,7 +13,7 @@ const LoginPage = () => {
   return (
     <>
       <section className="flex justify-center items-center h-screen">
-        <Card className="mx-auto max-w-sm">
+        <Card className="w-full max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>

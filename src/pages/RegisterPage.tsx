@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const RegisterPage = () => {
   return (
     <section className="flex items-center justify-center h-screen">
-      <Card className="mx-auto max-w-sm">
+      <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Sign Up</CardTitle>
           <CardDescription>
@@ -22,16 +22,11 @@ const RegisterPage = () => {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input id="first-name" placeholder="Sandip" required />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input id="last-name" placeholder="Sapkota" required />
-              </div>
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" placeholder="Sandip Sapkota" required />
             </div>
+
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
