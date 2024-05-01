@@ -16,15 +16,18 @@ import { toast } from "sonner";
 import { login } from "@/http/api";
 import { LoaderCircle } from "lucide-react";
 import { NetworkError } from "@/types";
+import useTokenStore from "@/store";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const setToken = useTokenStore((state) => state.setToken);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast.success("Logged in successfully!");
+      setToken(response.data.accessToken);
       navigate("/dashboard/home");
     },
     onError: (error: NetworkError) => {
