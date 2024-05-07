@@ -15,3 +15,10 @@ export const signUp = async (data: {
 }) => {
   return api.post("/api/users/register", data);
 };
+
+export const getBooks = async () => {
+  return api.get("/api/books");
+};
+export const getBook = async (id: string) => {
+  return api.get(`/api/books/${id}`);
+};

@@ -5,5 +5,19 @@ interface NetworkError extends Error {
     };
   };
 }
+interface Author {
+  _id: string;
+  name: string | undefined;
+}
 
-export type { NetworkError };
+interface Book {
+  _id: string;
+  title: string;
+  description: string;
+  genre: string;
+  author: Author;
+  coverImage: string;
+  file: string;
+  createdAt: string;
+}
+export type { NetworkError, Author, Book };
