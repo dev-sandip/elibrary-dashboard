@@ -32,7 +32,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { NetworkError } from "@/types";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
 const formSchema = z.object({
   title: z.string().min(2, {

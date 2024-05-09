@@ -32,8 +32,7 @@ import {
   Users,
 } from "lucide-react";
 import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
-import { toast } from "sonner";
-
+import toast from "react-hot-toast";
 const DashboardLayout = () => {
   const { token, setToken } = useTokenStore((state) => state);
   if (token === "") {
@@ -41,7 +40,9 @@ const DashboardLayout = () => {
   }
   const handleLogout = () => {
     setToken("");
-    toast.success("Logged out successfully");
+    toast("Logged out successfully!", {
+      icon: "🥹",
+    });
   };
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">

@@ -11,9 +11,9 @@ import { Label } from "@/components/ui/label";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { login } from "@/http/api";
 import { LoaderCircle } from "lucide-react";
+import toast from "react-hot-toast";
 import { NetworkError } from "@/types";
 import useTokenStore from "@/store";
 
@@ -25,7 +25,9 @@ const LoginPage = () => {
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
-      toast.success("Logged in successfully!");
+      toast("Login in successfully!", {
+        icon: "👏",
+      });
       setToken(response.data.accessToken);
       navigate("/dashboard/home");
     },
