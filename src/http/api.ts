@@ -43,3 +43,7 @@ export const updateBook = async (data: FormData, id: string) => {
     },
   });
 };
+
+export const deleteBook = async (id: string) => {
+  return api.delete(`/api/books/${id}`);
+};

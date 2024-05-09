@@ -31,19 +31,39 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getBooks } from "@/http/api";
-import { Book } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { deleteBook, getBooks } from "@/http/api";
+import { Book, NetworkError } from "@/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CirclePlus, MoreHorizontal } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const BooksPage = () => {
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["books"],
     queryFn: getBooks,
     staleTime: 10000,
   });
   console.log(data, isLoading, isError);
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteBook,
+    onSuccess: () => {
+      queryClient
+        .invalidateQueries({
+          queryKey: ["books"],
+        })
+        .then(() => {
+          toast.success(`Book has been deleted successfully`);
+          navigate("/dashboard/books");
+        });
+    },
+    onError: (error: NetworkError) => {
+      toast.error(error.response?.data?.message || "Something Went Wrong!");
+    },
+  });
 
   return (
     <div>
@@ -136,7 +156,15 @@ const BooksPage = () => {
                               Edit
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <button
+                              onClick={() => {
+                                mutate(book._id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
