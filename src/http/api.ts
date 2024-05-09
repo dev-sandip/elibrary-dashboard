@@ -1,7 +1,7 @@
 import useTokenStore from "@/store";
 import axios from "axios";
 const api = axios.create({
-  baseURL: "http://localhost:5513",
+  baseURL: import.meta.env.VITE_BACKEND_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
